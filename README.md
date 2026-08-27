@@ -33,7 +33,13 @@ Additional functional checks are available through the `check:*` npm scripts in 
 
 For a local development checkout, place the repository in `wp-content/plugins/npati-content-automation`, then activate **NPATI Content Automation** in WordPress.
 
-The WordPress.org distribution ZIP is produced from the private integration workspace by its release script. Development dependencies, tests, and repository metadata are excluded from that ZIP.
+Create a WordPress.org-ready distribution ZIP from the repository root:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\build-wordpress-plugin.ps1
+```
+
+The archive is written to `dist/npati-content-automation-<version>.zip`. Development dependencies, tests, documentation, and repository metadata are excluded automatically.
 
 ## License
 

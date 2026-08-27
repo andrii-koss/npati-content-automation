@@ -2,6 +2,7 @@
 /vendor/
 /.phpunit.result.cache
 /.plugin-check-temp/
+/dist/
 /*.zip
 .DS_Store
 Thumbs.db
