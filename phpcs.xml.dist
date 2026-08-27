@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<ruleset name="NPATI Content Automation">
+	<description>WordPress Coding Standards for the NPATI plugin's existing PSR-4 architecture.</description>
+
+	<file>npati-hub.php</file>
+	<file>includes</file>
+	<file>uninstall.php</file>
+
+	<arg name="extensions" value="php" />
+	<arg name="colors" />
+	<config name="minimum_supported_wp_version" value="6.4" />
+
+	<rule ref="WordPress">
+		<!-- Existing namespace/autoloader paths are a compatibility contract. -->
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+		<exclude name="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid" />
+		<exclude name="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase" />
+
+		<!-- Documentation coverage is reviewed separately from security/compliance lint. -->
+		<exclude name="Squiz.Commenting.FileComment.Missing" />
+		<exclude name="Squiz.Commenting.FileComment.MissingPackageTag" />
+		<exclude name="Squiz.Commenting.ClassComment.Missing" />
+		<exclude name="Squiz.Commenting.VariableComment.Missing" />
+		<exclude name="Squiz.Commenting.FunctionComment.Missing" />
+		<exclude name="Squiz.Commenting.EmptyCatchComment.Missing" />
+
+		<!-- Custom tables intentionally use prepared direct queries; credentials are never cached. -->
+		<exclude name="WordPress.DB.DirectDatabaseQuery.DirectQuery" />
+		<exclude name="WordPress.DB.DirectDatabaseQuery.NoCaching" />
+		<exclude name="WordPress.DB.DirectDatabaseQuery.SchemaChange" />
+
+		<!-- Base64 is used only for signatures/encrypted credentials, never code execution. -->
+		<exclude name="WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode" />
+		<exclude name="WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode" />
+
+		<!-- Preserve existing public hook names and intentional best-effort callbacks. -->
+		<exclude name="WordPress.NamingConventions.ValidHookName.UseUnderscores" />
+		<exclude name="Generic.CodeAnalysis.EmptyStatement.DetectedCatch" />
+		<exclude name="Generic.CodeAnalysis.UnusedFunctionParameter.Found" />
+		<exclude name="Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed" />
+		<exclude name="Generic.CodeAnalysis.AssignmentInCondition.FoundInWhileCondition" />
+		<exclude name="Generic.CodeAnalysis.ForLoopWithTestFunctionCall.NotAllowed" />
+		<exclude name="Universal.NamingConventions.NoReservedKeywordParameterNames.classFound" />
+		<exclude name="Universal.NamingConventions.NoReservedKeywordParameterNames.defaultFound" />
+	</rule>
+
+	<rule ref="WordPress.WP.Capabilities">
+		<properties>
+			<property name="custom_capabilities" type="array">
+				<element value="npati_view" />
+				<element value="npati_manage_market" />
+				<element value="npati_manage_hub" />
+				<element value="npati_schedule" />
+				<element value="npati_manage_connection" />
+				<element value="npati_manage_security" />
+				<element value="npati_manage_settings" />
+				<element value="npati_publish" />
+			</property>
+		</properties>
+	</rule>
+</ruleset>

@@ -1,0 +1,21 @@
+{
+  "name": "npati-content-automation",
+  "version": "1.0.2",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrii-koss/npati-content-automation.git"
+  },
+  "scripts": {
+    "check": "node tests/static-check.mjs",
+    "check:onboarding": "node tests/onboarding-popup.test.cjs",
+    "check:market": "node tests/market-card.test.cjs && node tests/create-route-resilience.test.cjs && node tests/address-flow.test.cjs",
+    "check:hub": "node tests/hub-overview.test.cjs",
+    "check:content": "node tests/content-workspace.test.cjs && node tests/content-status-calendar.test.cjs",
+    "format": "prettier --write assets/js/*.js",
+    "format:check": "prettier --check assets/js/*.js"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
+}
