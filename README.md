@@ -16,7 +16,7 @@
 **Create marketplace listings, schedule social media posts, plan WordPress articles, and use optional AI-assisted content creation from one WordPress dashboard.**
 
 <p align="center">
-  <img src="docs/Market-1.gif" alt="Creating an NPATI marketplace listing with a title, category, and product description in WordPress">
+  <img src="docs/Content-11.gif" alt="Creating and scheduling a WordPress article task and reviewing it in the content calendar">
 </p>
 
 [NPATI Content Automation](https://github.com/andrii-koss/npati-content-automation) connects WordPress to the [NPATI marketplace](https://www.npati.com/) and [NPATI Hub](https://www.npati.com/hub/). It gives sellers, creators, publishers, and small businesses one practical workspace for marketplace listings, video content, social media scheduling, editorial planning, and content automation.
@@ -49,6 +49,10 @@ Open **Market > Listings** and select **Create listing**. Start with the core pr
 - **Title:** Write a clear product name of up to 60 characters.
 - **Category:** Select the category that best matches the item.
 - **Product description:** Explain the item's features, condition, and important details in up to 2,000 characters.
+
+<p align="center">
+  <img src="docs/Market-1.gif" alt="Creating an NPATI marketplace listing with a title, category, and product description in WordPress">
+</p>
 
 ### Add product photos and preview the listing
 
@@ -151,10 +155,6 @@ The **Content** workspace is a WordPress content planner for SEO articles and sc
 - Search, filter, edit, copy, reschedule, delete, or bulk-delete planned articles.
 - View scheduled and published articles in the content calendar.
 - Prepare concise social media copy after an article is published and schedule it for a connected destination.
-
-<p align="center">
-  <img src="docs/Content-11.gif" alt="Planning, importing, editing, and scheduling WordPress articles with NPATI Content Automation">
-</p>
 
 To use AI writing or automated text generation, connect your own OpenAI API key and select a compatible model under **Settings**. All non-AI planning and scheduling features remain available without OpenAI.
 
