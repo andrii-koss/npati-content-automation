@@ -9,7 +9,7 @@
 
 <p align="center">
   <a href="https://www.npati.com/plugins/npati-content-automation">Website</a> ·
-  <a href="https://github.com/andrii-koss/npati-content-automation/tree/main/docs">Documentation</a> ·
+  <a href="docs/README.md">Documentation</a> ·
   <a href="https://github.com/andrii-koss/npati-content-automation">Source Code</a>
 </p>
 

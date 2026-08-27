@@ -124,7 +124,7 @@ The current optional OpenAI feature intentionally keeps its existing direct prov
 
 Public source repository: https://github.com/andrii-koss/npati-content-automation
 
-User documentation: https://github.com/andrii-koss/npati-content-automation/tree/main/docs
+User documentation: https://github.com/andrii-koss/npati-content-automation/blob/main/docs/README.md
 
 The human-readable JavaScript source used by the plugin is stored directly in `assets/js/` in that repository. The distributed `admin.js` and `blocks.js` files are the canonical source files. They are not minified, bundled, generated, or compiled, and there is no separate production JavaScript build step.
 
