@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npati.com/">Website</a> ·
+  <a href="https://www.npati.com/plugins/npati-content-automation">Website</a> ·
   <a href="https://github.com/andrii-koss/npati-content-automation/tree/main/docs">Documentation</a> ·
   <a href="https://github.com/andrii-koss/npati-content-automation">Source Code</a>
 </p>
@@ -274,9 +274,13 @@ Open [NPATI Hub](https://www.npati.com/hub/), choose an integration, and complet
 <h2 align="center"><strong>Useful links</strong></h2>
 
 - [NPATI marketplace](https://www.npati.com/)
+- [NPATI Content Automation plugin page](https://www.npati.com/plugins/npati-content-automation)
 - [NPATI Hub](https://www.npati.com/hub/)
 - [NPATI Blog](https://en.npati.com/)
 - [How to Create a Listing on NPATI](https://en.npati.com/how-to-create-a-listing-on-npati/)
+- [User and developer documentation](docs/README.md)
+- [Security policy](SECURITY.md)
+- [Contributing guide](CONTRIBUTING.md)
 - [Source code](https://github.com/andrii-koss/npati-content-automation)
 
 <h2 align="center"><strong>Development</strong></h2>
