@@ -3230,6 +3230,12 @@
       <input type="checkbox" name="scheduleEnabled" hidden><div class="npati-schedule-modal" role="dialog" aria-modal="true" aria-labelledby="npati-schedule-title" hidden><div class="npati-schedule-dialog"><header><div><span>NPATI HUB</span><h2 id="npati-schedule-title">${t("Schedule publication", "Запланувати публікацію")}</h2><p>${t("Choose the exact publication date, time and timezone.", "Оберіть точну дату, час і часовий пояс публікації.")}</p></div><button type="button" data-action="schedule-cancel" aria-label="${t("Close", "Закрити")}">${closeIcon}</button></header><section class="npati-schedule-content"><div class="npati-schedule-calendar">${scheduleCalendarMarkup("")}</div><div class="npati-schedule-settings"><label>${t("Selected date", "Обрана дата")}<input name="scheduleDate" type="text" readonly placeholder="YYYY-MM-DD"></label><label>${t("Publication time", "Час публікації")}<input name="scheduleTime" type="time"></label><label>${t("Timezone", "Часовий пояс")}<input name="scheduleTimezone" value="${esc(cfg.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC")}" list="npati-schedule-timezones"><datalist id="npati-schedule-timezones"><option value="Europe/Kyiv"><option value="Europe/London"><option value="America/New_York"><option value="America/Chicago"><option value="America/Los_Angeles"><option value="America/Toronto"><option value="America/Vancouver"></datalist></label><p>${t("The publication will use your selected NPATI market and connected account.", "Публікація використовуватиме вибраний ринок NPATI та підключений обліковий запис.")}</p></div></section><p class="npati-schedule-error" role="alert"></p><footer><button type="button" class="npati-secondary-button" data-action="schedule-cancel">${t("Cancel", "Скасувати")}</button><button type="button" class="npati-primary-button" data-action="schedule-confirm">${t("Create and schedule", "Створити й запланувати")}</button></footer></div></div>
     </section><footer class="npati-create-actions"><span class="npati-form-status" role="status"></span><button type="button" class="npati-secondary-button" data-action="toggle-listing-schedule">${t("Schedule publication", "Запланувати публікацію")}</button><button type="button" class="npati-secondary-button" data-route="market">${t("Cancel", "Скасувати")}</button><button type="submit" class="npati-primary-button">${editing ? t("Update", "Оновити") : t("Create", "Створити")}</button></footer></main><aside><section class="npati-create-preview"><h2 class="npati-preview-heading">Product Preview</h2><article class="npati-preview-card"><div class="npati-preview-media" data-preview-index="0"></div><div class="npati-preview-body"><h3 class="npati-preview-title">${t("Product title", "Назва продукту")}</h3><div class="npati-preview-price-row"><div><strong class="npati-preview-price">0 ${currency}</strong><del class="npati-preview-old-price" hidden></del></div><span class="npati-preview-open" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div><footer class="npati-preview-meta"><div><strong class="npati-preview-location"></strong><time class="npati-preview-date"></time></div><span class="npati-preview-views">${eyeIcon}<b>0</b></span></footer></div></article></section></aside></form>`;
     const form = document.getElementById("npati-listing-form");
+    form.elements.disableBuy.checked = true;
+    form.elements.disableBuy.disabled = true;
+    form.elements.disableBuy.setAttribute("aria-disabled", "true");
+    form.elements.shippingAvailable.checked = false;
+    form.elements.shippingAvailable.disabled = true;
+    form.elements.shippingAvailable.setAttribute("aria-disabled", "true");
     form.insertAdjacentHTML("beforeend", listingAddressModal());
     bindCreateProductForm(form);
     if (editing) populateListingForm(form, editing);
@@ -3299,8 +3305,6 @@
     [
       "isFree",
       "isPost",
-      "disableBuy",
-      "shippingAvailable",
       "enableColors",
       "enableSizes",
     ].forEach((name) => {
@@ -3309,6 +3313,8 @@
     });
     if (form.elements.showAuthor)
       form.elements.showAuthor.checked = item.showAuthor !== false;
+    form.elements.disableBuy.checked = true;
+    form.elements.shippingAvailable.checked = false;
     (item.sizes || []).forEach((value, index) =>
       set(
         `size_${index + 1}`,
@@ -4003,7 +4009,7 @@
       })),
       phone: form.elements.phone.value || undefined,
       email: form.elements.email.value || undefined,
-      disableBuy: Boolean(form.elements.disableBuy.checked),
+      disableBuy: true,
       showAuthor: Boolean(form.elements.showAuthor.checked),
       location:
         form.elements.location.value ||
@@ -4014,14 +4020,7 @@
       video: videos[0]?.fileId,
       thumbnail: thumbnails[0]?.fileId || photos[0]?.fileId,
       shippingAddressId: form.elements.shippingAddressId.value || undefined,
-      shippingAvailable: Boolean(form.elements.shippingAvailable.checked),
-      packageSizePreset: form.elements.packageSizePreset.value,
-      packageLength: form.elements.packageLength.value || undefined,
-      packageWidth: form.elements.packageWidth.value || undefined,
-      packageHeight: form.elements.packageHeight.value || undefined,
-      weight: form.elements.weight.value || undefined,
-      weightUnit: "kg",
-      dimensionUnit: "cm",
+      shippingAvailable: false,
       scheduledFor,
       scheduleTimezone: scheduledFor
         ? form.elements.scheduleTimezone.value || cfg.timezone

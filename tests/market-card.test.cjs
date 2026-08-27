@@ -31,7 +31,7 @@ const listing = {
         if (options.path === '/npati/v1/market/listing-schema') return { categories: [{ id: 'category-fashion', name: 'Fashion', subcategories: [] }], addresses: [] };
         if (options.path === '/npati/v1/market/media/import') { const id=options.data?.attachmentId;window.__importedAttachment=id;window.__importedAttachments=[...(window.__importedAttachments||[]),id];if(id===902){await new Promise(resolve=>setTimeout(resolve,650));return {fileId:'npati-file-902',previewUrl:'https://example.com/new-video.mp4',publicUrl:'https://example.com/new-video.mp4',mimeType:'video/mp4'}}if(id===904)return {fileId:'npati-file-904',previewUrl:'https://example.com/generated-thumbnail.webp',publicUrl:'https://example.com/generated-thumbnail.webp',mimeType:'image/webp'};return { fileId: `npati-file-${id}`, previewUrl: 'https://example.com/new-photo.webp', publicUrl: 'https://example.com/new-photo.webp', mimeType: 'image/webp' }; }
         if (/\/npati\/v1\/market\/listings\/[0-9a-f-]+$/.test(options.path) && options.method === 'PUT') { window.__updatedListing = options.data; return { id: options.path.split('/').pop() }; }
-        if (/\/npati\/v1\/market\/listings\/[0-9a-f-]+$/.test(options.path) && options.method === 'DELETE') { window.__deletedListing = options.path.split('/').pop(); return { deleted: true }; }
+        if (/\/npati\/v1\/market\/listings\/[0-9a-f-]+$/.test(options.path) && options.method === 'DELETE') { window.__deletedListing = options.path.split('/').pop(); return { status: 'archived' }; }
         if (options.path.includes('/npati/v1/market/listings?status=pending')) return [{ ...sample, id: '88888888-8888-4888-8888-888888888888', title: 'Pending listing', status: 'pending' }];
         if (options.path.includes('/npati/v1/market/listings?status=rejected')) return [{ ...sample, id: '99999999-9999-4999-8999-999999999999', title: 'Rejected listing', status: 'rejected' }];
         if (options.path.startsWith('/npati/v1/market/listings')) return [
@@ -113,6 +113,8 @@ const listing = {
     if (await page.locator('.npati-create-heading .npati-eyebrow').count()) throw new Error('Removed CREATE LISTING eyebrow returned');
     if (await page.locator('[name="title"]').getAttribute('maxlength') !== '60' || await page.locator('[name="description"]').getAttribute('maxlength') !== '2000') throw new Error('Frontend title/description limits are not preserved');
     for (const name of ['enableColors','enableSizes','isPost','isFree','showAuthor','disableBuy','shippingAddressId','phone','email','tagInput','shippingAvailable','packageSizePreset','packageLength','packageWidth','packageHeight','weight','scheduleEnabled']) if (!await page.locator(`[name="${name}"]`).count()) throw new Error(`Create-product field is missing: ${name}`);
+    if (!await page.locator('[name="disableBuy"]').isDisabled() || !await page.locator('[name="disableBuy"]').isChecked()) throw new Error('Disable Buy must be locked in the enabled state');
+    if (!await page.locator('[name="shippingAvailable"]').isDisabled() || await page.locator('[name="shippingAvailable"]').isChecked()) throw new Error('Delivery must be locked in the disabled state');
     for (const id of ['npati-listing-photos','npati-listing-video','npati-listing-thumbnail']) if (!await page.locator(`#${id}`).count()) throw new Error(`Dedicated media area is missing: ${id}`);
     await page.locator('[data-action="toggle-category-picker"]').click();
     if (!await page.locator('.npati-category-menu').isVisible() || await page.locator('.npati-category-option').count() !== 1) throw new Error('Frontend category selector did not open with market categories');
@@ -168,7 +170,7 @@ const listing = {
     if (await page.locator('#npati-listing-photos figure').count() !== 6 || await page.locator('#npati-listing-video figure').count() !== 1 || await page.locator('#npati-listing-thumbnail figure').count() !== 1) throw new Error('Edit form did not preserve listing photos, video and thumbnail');
     await page.locator('#npati-listing-form [name="title"]').fill('Updated listing from WordPress');
     await page.locator('#npati-listing-form [type="submit"]').click();
-    await page.waitForFunction(() => window.__updatedListing?.title === 'Updated listing from WordPress' && window.__updatedListing?.photos?.length === 6 && window.__updatedListing?.video === 'npati-file-902' && window.__updatedListing?.thumbnail === 'npati-file-904');
+    await page.waitForFunction(() => window.__updatedListing?.title === 'Updated listing from WordPress' && window.__updatedListing?.photos?.length === 6 && window.__updatedListing?.video === 'npati-file-902' && window.__updatedListing?.thumbnail === 'npati-file-904' && window.__updatedListing?.disableBuy === true && window.__updatedListing?.shippingAvailable === false && window.__updatedListing?.packageSizePreset === undefined);
     await page.waitForSelector('.npati-listing-card');
     const deleteCard=page.locator('.npati-listing-card').nth(1);await deleteCard.locator('[data-action="toggle-listing-menu"]').click();
     page.once('dialog',dialog=>dialog.accept());await deleteCard.locator('[data-action="delete-listing"]').click();

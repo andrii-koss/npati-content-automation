@@ -266,6 +266,11 @@ for (const required of ['maxlength="60"', 'maxlength="2000"', 'listing-photos', 
     console.error(`create-product parity is missing: ${required}`); failed = true;
   }
 }
+for (const required of ['form.elements.disableBuy.disabled = true', 'form.elements.shippingAvailable.disabled = true', 'disableBuy: true', 'shippingAvailable: false']) {
+  if (!adminJs.includes(required)) {
+    console.error(`Temporary purchase/delivery restriction is missing: ${required}`); failed = true;
+  }
+}
 for (const required of ['generateListingVideoThumbnail', 'createAutomaticListingThumbnail', "path:'/wp/v2/media'", 'is-thumbnail-video', 'is-media-carousel', "dataset.cardVariant=thumbnailVideoMode?'tall':'short'", "if(mediaCarouselMode&&activeItem?.videoUrl)"]) {
   if (!adminJs.includes(required)) {
     console.error(`create-product video thumbnail parity is missing: ${required}`); failed = true;
@@ -301,6 +306,14 @@ for (const required of ['npati-market-video-card', 'npati-video-viewer', 'openMa
   }
 }
 const restController = searchable(await readFile(resolve(root, 'includes/Api/RestController.php'), 'utf8'));
+if (!restController.includes("$this->client->put( $path, array( 'status' => 'archived' ) )")) {
+  console.error('Listing deletion must archive the advert instead of permanently deleting it'); failed = true;
+}
+for (const required of ["$body['disableBuy'] = true", "$body['shippingAvailable'] = false", "unset( $body[ $delivery_key ] )"]) {
+  if (!restController.includes(required)) {
+    console.error(`Server-side purchase/delivery restriction is missing: ${required}`); failed = true;
+  }
+}
 for (const required of ["'/content/ai'", "'/content/import'", "'/content/tasks'", 'content_social']) {
   if (!restController.includes(required)) { console.error(`Content REST flow is missing: ${required}`); failed = true; }
 }

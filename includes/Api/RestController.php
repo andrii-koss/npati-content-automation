@@ -765,7 +765,7 @@ final class RestController {
 		try {
 			$path = '/listings/' . rawurlencode( (string) $request['id'] );
 			if ( 'DELETE' === $request->get_method() ) {
-				return rest_ensure_response( $this->client->delete( $path ) );
+				return rest_ensure_response( $this->client->put( $path, array( 'status' => 'archived' ) ) );
 			} return rest_ensure_response( $this->client->put( $path, $this->listing_body( $request->get_json_params() ) ) );
 		} catch ( \Exception $e ) {
 			return $this->error( $e ); } }
@@ -879,6 +879,13 @@ final class RestController {
 	private function listing_body( $input ) {
 		$allowed = array( 'title', 'description', 'categoryId', 'price', 'discountPrice', 'isFree', 'isPost', 'currency', 'condition', 'brand', 'model', 'location', 'country', 'deliveryOptions', 'deliveryPrice', 'isFreeDelivery', 'isNegotiable', 'tags', 'enableColors', 'colors', 'photo1Color', 'photo2Color', 'photo3Color', 'photo4Color', 'photo5Color', 'photo6Color', 'enableSizes', 'sizes', 'size1', 'size2', 'size3', 'size4', 'size5', 'size6', 'sizeDetails1', 'sizeDetails2', 'sizeDetails3', 'sizeDetails4', 'sizeDetails5', 'sizeDetails6', 'phone', 'email', 'disableBuy', 'showAuthor', 'photos', 'video', 'thumbnail', 'shippingAddressId', 'shippingAvailable', 'pickupAvailable', 'packageSizePreset', 'packageLength', 'packageWidth', 'packageHeight', 'weight', 'weightUnit', 'dimensionUnit', 'scheduledFor', 'scheduleTimezone' );
 		$body    = array_intersect_key( is_array( $input ) ? $input : array(), array_flip( $allowed ) );
+		// Purchase and delivery are temporarily unavailable on npati.com.
+		// Enforce the same restriction if a client tampers with the form.
+		$body['disableBuy']        = true;
+		$body['shippingAvailable'] = false;
+		foreach ( array( 'deliveryOptions', 'deliveryPrice', 'isFreeDelivery', 'pickupAvailable', 'packageSizePreset', 'packageLength', 'packageWidth', 'packageHeight', 'weight', 'weightUnit', 'dimensionUnit' ) as $delivery_key ) {
+			unset( $body[ $delivery_key ] );
+		}
 		foreach ( array( 'title', 'description', 'categoryId', 'currency', 'condition', 'brand', 'model', 'location', 'country', 'video', 'thumbnail', 'shippingAddressId', 'packageSizePreset', 'weightUnit', 'dimensionUnit', 'scheduledFor', 'scheduleTimezone', 'phone' ) as $key ) {
 			if ( isset( $body[ $key ] ) && is_string( $body[ $key ] ) ) {
 				$body[ $key ] = sanitize_textarea_field( $body[ $key ] );
