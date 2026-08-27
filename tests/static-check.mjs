@@ -96,7 +96,7 @@ for (const required of ["'npati-content'", 'data-npati-route="content"']) {
 if (!admin.includes("remove_submenu_page('npati','npati')")) {
   console.error('includes/Admin/Admin.php: Dashboard submenu is still registered'); failed = true;
 }
-if (!admin.includes("NPATI_HUB_URL.'assets/images/favicon.png'") || !admin.includes("remove_submenu_page('npati','npati-calendar')") || !admin.includes("remove_submenu_page('npati','npati-connections')")) {
+if (!admin.includes("add_menu_page('NPATI','NPATI','npati_view','npati',array($this,'page'),NPATI_HUB_URL.'assets/images/favicon.png',58)") || admin.includes("'dashicons-marker'") || !admin.includes("remove_submenu_page('npati','npati-calendar')") || !admin.includes("remove_submenu_page('npati','npati-connections')")) {
   console.error('WordPress admin menu branding or hidden Hub shortcuts are missing'); failed = true;
 }
 for (const removedRoute of ['data-route="dashboard"', 'data-route="hub/history"', 'data-route="analytics"', "state.route==='dashboard'", "state.route==='hub/history'", "state.route==='analytics'"]) {

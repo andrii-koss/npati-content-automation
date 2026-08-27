@@ -25,7 +25,7 @@ final class Admin {
 		add_action( 'admin_enqueue_scripts', array( $this, 'assets' ) );
 		add_action( 'admin_init', array( $this, 'actions' ) );}
 	public function menu() {
-		add_menu_page( 'NPATI', 'NPATI', 'npati_view', 'npati', array( $this, 'page' ), 'dashicons-marker', 58 );
+		add_menu_page( 'NPATI', 'NPATI', 'npati_view', 'npati', array( $this, 'page' ), NPATI_HUB_URL . 'assets/images/favicon.png', 58 );
 		$items = array(
 			'npati-market'      => __( 'NPATI Market', 'npati-content-automation' ),
 			'npati-hub-content' => 'NPATI Hub',
