@@ -1,4 +1,8 @@
-# NPATI Content Automation for WordPress
+<h1 align="center"><strong>NPATI Content Automation for WordPress</strong></h1>
+
+<p align="center">
+  <img src="docs/Market-1.gif" alt="Creating an Npati marketplace listing with a title, category, and product description in WordPress">
+</p>
 
 **Create marketplace listings, schedule social media posts, plan WordPress articles, and use optional AI-assisted content creation from one WordPress dashboard.**
 
@@ -6,46 +10,7 @@
 
 The plugin is **free to install and use**. OpenAI is optional. If you connect your own OpenAI API key, OpenAI may charge your account for API usage according to its pricing and terms.
 
-## Table of contents
-
-- [Who is this plugin for?](#who-is-this-plugin-for)
-- [What makes it different?](#what-makes-it-different)
-- [Getting started](#getting-started)
-- [Market: listings, videos, and shorts](#market-listings-videos-and-shorts)
-- [Hub: social media publishing](#hub-social-media-publishing)
-- [Content: WordPress article planning](#content-wordpress-article-planning)
-- [Settings](#settings)
-- [Security](#security)
-- [Requirements and installation](#requirements-and-installation)
-- [Frequently asked questions](#frequently-asked-questions)
-- [Useful links](#useful-links)
-- [Development](#development)
-- [License](#license)
-
-## Who is this plugin for?
-
-|     | Best for                               | How it helps                                                                      |
-| --- | -------------------------------------- | --------------------------------------------------------------------------------- |
-| 🛍️  | **Local sellers and online stores**    | Create rich product listings in WordPress and publish them to your Npati account. |
-| 🏪  | **Small businesses**                   | Manage marketplace content and connected social channels from one workspace.      |
-| 🎬  | **Creators and video marketers**       | Work with videos, Shorts, photo carousels, and video-first listings.              |
-| ✍️  | **Bloggers and publishers**            | Plan SEO-focused WordPress articles manually or with optional AI assistance.      |
-| 📣  | **Social media managers and agencies** | Schedule posts for connected services and review activity in a shared calendar.   |
-| ⚙️  | **WordPress administrators and teams** | Control publishing permissions, integrations, security status, and audit history. |
-
-## What makes it different?
-
-| Feature                                       | Why it matters                                                                                          |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| **Marketplace + content + social publishing** | Manage several publishing workflows without leaving WordPress.                                          |
-| **Direct Npati listing workflow**             | Build a listing in the plugin and publish it to the connected Npati profile.                            |
-| **Rich photo and video listings**             | Upload up to six product photos, label colors, add video, and preview the result before publishing.     |
-| **NPATI Hub integrations**                    | Connect supported services through secure provider authorization and schedule content from WordPress.   |
-| **Editorial planner and bulk import**         | Create tasks manually or import CSV/XLSX files, then edit, reschedule, copy, or remove planned content. |
-| **Optional bring-your-own OpenAI key**        | Choose an available model and generate content only when you decide to use AI features.                 |
-| **Privacy-focused connection model**          | Social access tokens stay in NPATI Hub and are never stored in WordPress.                               |
-
-## Getting started
+<h2 align="center"><strong>Getting started</strong></h2>
 
 After installing and activating the plugin:
 
@@ -56,25 +21,21 @@ After installing and activating the plugin:
 
 An Npati account is required for connected marketplace and Hub features. An OpenAI account and API key are needed only for optional AI-assisted writing.
 
-## Market: listings, videos, and shorts
+<h2 align="center"><strong>Market: listings, videos, and shorts</strong></h2>
 
 The **Market** workspace has three sections:
 
-- **Listings** — create and manage marketplace listings.
-- **Videos** — watch videos from your Npati profile and respond to comments.
-- **Shorts** — view the Shorts published in your Npati profile.
+- **Listings:** Create and manage marketplace listings.
+- **Videos:** Watch videos from your Npati profile and respond to comments.
+- **Shorts:** View the Shorts published in your Npati profile.
 
 ### Create a listing
 
-Open **Market → Listings** and select **Create listing**. Start with the core product information:
+Open **Market > Listings** and select **Create listing**. Start with the core product information:
 
-- **Title** — write a clear product name of up to 60 characters.
-- **Category** — select the category that best matches the item.
-- **Product description** — explain the item's features, condition, and important details in up to 2,000 characters.
-
-<p align="center">
-  <img src="docs/Market-1.gif" alt="Creating an Npati marketplace listing with a title, category, and product description in WordPress">
-</p>
+- **Title:** Write a clear product name of up to 60 characters.
+- **Category:** Select the category that best matches the item.
+- **Product description:** Explain the item's features, condition, and important details in up to 2,000 characters.
 
 ### Add product photos and preview the listing
 
@@ -83,6 +44,8 @@ The **Product photos** area accepts up to six images. Drag files into the upload
 <p align="center">
   <img src="docs/Market-2-photo.gif" alt="Uploading product photos to an Npati listing from WordPress">
 </p>
+
+After uploading the photos, use the preview panel to check their order and presentation. Select the navigation controls on either side of the preview to move through the carousel and inspect each image before publishing the listing.
 
 <p align="center">
   <img src="docs/Market-3-photo.gif" alt="Reviewing product photos in the Npati listing preview carousel">
@@ -134,7 +97,7 @@ The **Videos** section displays videos uploaded to your Npati profile. Watch the
 
 The **Shorts** section brings the short-form videos from your Npati profile into the plugin, so you can review your marketplace video content from WordPress.
 
-## Hub: social media publishing
+<h2 align="center"><strong>Hub: social media publishing</strong></h2>
 
 The **Hub** workspace brings connected publishing destinations and scheduled social media content into WordPress. It includes **Overview**, **Create Post**, **Calendar**, and **Connections**.
 
@@ -164,7 +127,7 @@ To add another integration, open [NPATI Hub](https://www.npati.com/hub/) and com
   <img src="docs/Hub-Calendar-Connections-10.gif" alt="Using the NPATI Hub publication calendar and connected social media services in WordPress">
 </p>
 
-## Content: WordPress article planning
+<h2 align="center"><strong>Content: WordPress article planning</strong></h2>
 
 The **Content** workspace is a WordPress content planner for SEO articles and scheduled publishing. You can:
 
@@ -182,16 +145,16 @@ The **Content** workspace is a WordPress content planner for SEO articles and sc
 
 To use AI writing or automated text generation, connect your own OpenAI API key and select a compatible model under **Settings**. All non-AI planning and scheduling features remain available without OpenAI.
 
-## Settings
+<h2 align="center"><strong>Settings</strong></h2>
 
 The **Settings** page gives administrators control over the WordPress and NPATI Hub connection:
 
-- **Default WordPress author** — choose the default author for created content.
-- **Store link** — explicitly opt in to showing a link to your Npati store in the site footer.
-- **Security mode** — select the preferred security level.
-- **Hub → WordPress** — allow signed commands to publish; when disabled, incoming content is limited to drafts.
-- **Audit retention** — keep activity records for 7, 30, or 90 days.
-- **Uninstall cleanup** — choose whether uninstalling removes plugin settings and local integration tables.
+- **Default WordPress author:** Choose the default author for created content.
+- **Store link:** Explicitly opt in to showing a link to your Npati store in the site footer.
+- **Security mode:** Select the preferred security level.
+- **Hub to WordPress:** Allow signed commands to publish. When disabled, incoming content is limited to drafts.
+- **Audit retention:** Keep activity records for 7, 30, or 90 days.
+- **Uninstall cleanup:** Choose whether uninstalling removes plugin settings and local integration tables.
 
 ### OpenAI connection
 
@@ -206,19 +169,42 @@ OpenAI integration is optional and uses your own API key. The key is encrypted a
   <img src="docs/Hub-Settings-12.gif" alt="Configuring WordPress publishing settings and an optional OpenAI model in NPATI Content Automation">
 </p>
 
-## Security
+<h2 align="center"><strong>Security</strong></h2>
 
 The **Security** page provides a clear status view for:
 
 - HTTPS availability.
 - The NPATI Hub connection.
 - Webhook signature verification.
-- Social token storage — social access tokens are never stored in WordPress.
+- Social token storage. Social access tokens are never stored in WordPress.
 - Recent activity, including successful and failed connection, API, and webhook events.
 
 Remote publishing is disabled by default. Administrators can explicitly allow signed NPATI Hub commands to publish; otherwise, incoming content remains in draft status.
 
-## Requirements and installation
+<h2 align="center"><strong>Who is this plugin for?</strong></h2>
+
+|     | Best for                               | How it helps                                                                      |
+| --- | -------------------------------------- | --------------------------------------------------------------------------------- |
+| 🛍️  | **Local sellers and online stores**    | Create rich product listings in WordPress and publish them to your Npati account. |
+| 🏪  | **Small businesses**                   | Manage marketplace content and connected social channels from one workspace.      |
+| 🎬  | **Creators and video marketers**       | Work with videos, Shorts, photo carousels, and video-first listings.              |
+| ✍️  | **Bloggers and publishers**            | Plan SEO-focused WordPress articles manually or with optional AI assistance.      |
+| 📣  | **Social media managers and agencies** | Schedule posts for connected services and review activity in a shared calendar.   |
+| ⚙️  | **WordPress administrators and teams** | Control publishing permissions, integrations, security status, and audit history. |
+
+<h2 align="center"><strong>What makes it different?</strong></h2>
+
+| Feature                                         | Why it matters                                                                                          |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| **Marketplace, content, and social publishing** | Manage several publishing workflows without leaving WordPress.                                          |
+| **Direct Npati listing workflow**               | Build a listing in the plugin and publish it to the connected Npati profile.                            |
+| **Rich photo and video listings**               | Upload up to six product photos, label colors, add video, and preview the result before publishing.     |
+| **NPATI Hub integrations**                      | Connect supported services through secure provider authorization and schedule content from WordPress.   |
+| **Editorial planner and bulk import**           | Create tasks manually or import CSV/XLSX files, then edit, reschedule, copy, or remove planned content. |
+| **Optional OpenAI connection**                  | Choose an available model and generate content only when you decide to use AI features.                 |
+| **Privacy-focused connection model**            | Social access tokens stay in NPATI Hub and are never stored in WordPress.                               |
+
+<h2 align="center"><strong>Requirements and installation</strong></h2>
 
 ### Requirements
 
@@ -230,7 +216,7 @@ Remote publishing is disabled by default. Administrators can explicitly allow si
 ### Install from a release package
 
 1. Download the latest plugin ZIP from the [GitHub repository](https://github.com/andrii-koss/npati-content-automation).
-2. In WordPress, open **Plugins → Add New Plugin → Upload Plugin**.
+2. In WordPress, open **Plugins > Add New Plugin > Upload Plugin**.
 3. Select the ZIP file, install it, and activate **NPATI Content Automation**.
 4. Open **NPATI** in the WordPress admin menu and connect your account.
 
@@ -244,7 +230,7 @@ wp-content/plugins/npati-content-automation
 
 Then activate **NPATI Content Automation** from the WordPress Plugins page.
 
-## Frequently asked questions
+<h2 align="center"><strong>Frequently asked questions</strong></h2>
 
 ### Is NPATI Content Automation free?
 
@@ -270,7 +256,7 @@ Only when a WordPress administrator explicitly enables signed remote publishing.
 
 Open [NPATI Hub](https://www.npati.com/hub/), choose an integration, and complete the provider's secure authorization process. The connected service will then appear in the plugin's **Connections** section.
 
-## Useful links
+<h2 align="center"><strong>Useful links</strong></h2>
 
 - [Npati marketplace](https://www.npati.com/)
 - [NPATI Hub](https://www.npati.com/hub/)
@@ -278,7 +264,7 @@ Open [NPATI Hub](https://www.npati.com/hub/), choose an integration, and complet
 - [How to Create a Listing on Npati](https://en.npati.com/how-to-create-a-listing-on-npati/)
 - [Source code and releases](https://github.com/andrii-koss/npati-content-automation)
 
-## Development
+<h2 align="center"><strong>Development</strong></h2>
 
 The plugin runtime source is stored directly in this repository. JavaScript in `assets/js/` is human-readable and is not generated, minified, bundled, or compiled.
 
@@ -302,6 +288,6 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\build-wordpress-pl
 
 The archive is written to `dist/npati-content-automation-<version>.zip`. Development dependencies, tests, documentation, and repository metadata are excluded automatically.
 
-## License
+<h2 align="center"><strong>License</strong></h2>
 
 NPATI Content Automation is licensed under the [GNU General Public License v2.0 or later](LICENSE).
