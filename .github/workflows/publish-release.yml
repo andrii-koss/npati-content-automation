@@ -1,0 +1,120 @@
+name: Publish WordPress plugin release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Build and publish plugin ZIP
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out release tag
+        uses: actions/checkout@v4
+
+      - name: Verify version metadata
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $tagVersion = $env:GITHUB_REF_NAME -replace '^v', ''
+          $pluginHeader = Get-Content -LiteralPath 'npati-hub.php' -Raw
+          $pluginMatch = [regex]::Match($pluginHeader, '(?m)^\s*\*\s*Version:\s*([0-9]+\.[0-9]+\.[0-9]+)\s*$')
+          $readme = Get-Content -LiteralPath 'readme.txt' -Raw
+          $stableMatch = [regex]::Match($readme, '(?m)^Stable tag:\s*([0-9]+\.[0-9]+\.[0-9]+)\s*$')
+
+          if (-not $pluginMatch.Success -or -not $stableMatch.Success) {
+              throw 'Unable to read version metadata from npati-hub.php or readme.txt.'
+          }
+          if ($pluginMatch.Groups[1].Value -ne $tagVersion) {
+              throw "Plugin version $($pluginMatch.Groups[1].Value) does not match tag $env:GITHUB_REF_NAME."
+          }
+          if ($stableMatch.Groups[1].Value -ne $tagVersion) {
+              throw "Stable tag $($stableMatch.Groups[1].Value) does not match tag $env:GITHUB_REF_NAME."
+          }
+
+          "PLUGIN_VERSION=$tagVersion" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Build WordPress plugin ZIP
+        shell: pwsh
+        run: .\scripts\build-wordpress-plugin.ps1
+
+      - name: Verify WordPress plugin ZIP
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Add-Type -AssemblyName System.IO.Compression
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+
+          $zipPath = "dist/npati-content-automation-$env:PLUGIN_VERSION.zip"
+          $archive = [System.IO.Compression.ZipFile]::OpenRead((Resolve-Path -LiteralPath $zipPath))
+          try {
+              $entries = @($archive.Entries | ForEach-Object FullName)
+              $requiredEntries = @(
+                  'npati-content-automation/npati-hub.php',
+                  'npati-content-automation/readme.txt',
+                  'npati-content-automation/assets/js/admin.js',
+                  'npati-content-automation/includes/Core/Plugin.php',
+                  'npati-content-automation/languages/index.php'
+              )
+
+              foreach ($requiredEntry in $requiredEntries) {
+                  if ($entries -notcontains $requiredEntry) {
+                      throw "Required ZIP entry is missing: $requiredEntry"
+                  }
+              }
+              if ($entries | Where-Object { $_ -notlike 'npati-content-automation/*' }) {
+                  throw 'ZIP contains an entry outside the npati-content-automation root directory.'
+              }
+              if ($entries | Where-Object { $_ -like 'npati-content-automation/npati-content-automation/*' }) {
+                  throw 'ZIP contains a duplicated plugin directory.'
+              }
+          }
+          finally {
+              $archive.Dispose()
+          }
+
+      - name: Publish stable GitHub release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $notes = @'
+          ## NPATI Content Automation {{TAG}}
+
+          First public GitHub release of NPATI Content Automation for WordPress.
+
+          ### Highlights
+
+          - NPATI marketplace listing management
+          - Product photos, videos, and Shorts
+          - NPATI Hub social media scheduling
+          - WordPress content planning and editorial calendar
+          - CSV/XLSX bulk content import
+          - Optional OpenAI-assisted content generation
+          - Security and publishing controls
+          - WordPress 6.4+ support
+          - PHP 7.4+ support
+
+          ### Installation
+
+          Download `npati-content-automation-{{VERSION}}.zip` below and install it from:
+
+          WordPress > Plugins > Add New Plugin > Upload Plugin
+          '@
+          $notes = $notes.Replace('{{TAG}}', $env:GITHUB_REF_NAME).Replace('{{VERSION}}', $env:PLUGIN_VERSION)
+          $notesPath = Join-Path $env:RUNNER_TEMP 'release-notes.md'
+          Set-Content -LiteralPath $notesPath -Value $notes -Encoding utf8
+          $assetPath = "dist/npati-content-automation-$env:PLUGIN_VERSION.zip"
+
+          gh release create $env:GITHUB_REF_NAME $assetPath `
+              --repo $env:GITHUB_REPOSITORY `
+              --title "NPATI Content Automation $env:GITHUB_REF_NAME" `
+              --notes-file $notesPath `
+              --verify-tag `
+              --latest
