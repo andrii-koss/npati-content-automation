@@ -8,8 +8,9 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npati.com/plugins/npati-content-automation">Website</a> ·
-  <a href="docs/README.md">Documentation</a> ·
+  <a href="https://www.npati.com/plugins/npati-content-automation">Website</a> &middot;
+  <a href="docs/README.md">Documentation</a> &middot;
+  <a href="https://github.com/andrii-koss/npati-content-automation/releases/latest">Download</a> &middot;
   <a href="https://github.com/andrii-koss/npati-content-automation">Source Code</a>
 </p>
 
@@ -228,12 +229,11 @@ Remote publishing is disabled by default. Administrators can explicitly allow si
 
 ### Install from GitHub
 
-A stable GitHub Release is not available yet. To install the current source version:
-
-1. Open the [GitHub repository](https://github.com/andrii-koss/npati-content-automation), select **Code**, and choose **Download ZIP**.
+1. Download the latest `npati-content-automation` release ZIP from [GitHub Releases](https://github.com/andrii-koss/npati-content-automation/releases/latest).
 2. In WordPress, open **Plugins > Add New Plugin > Upload Plugin**.
-3. Select the ZIP file, install it, and activate **NPATI Content Automation**.
-4. Open **NPATI** in the WordPress admin menu and connect your account.
+3. Select the downloaded ZIP file.
+4. Install and activate **NPATI Content Automation**.
+5. Open **NPATI** in the WordPress admin menu and connect your account.
 
 ### Install a development checkout
 

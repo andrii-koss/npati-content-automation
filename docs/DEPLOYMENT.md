@@ -29,14 +29,15 @@ This document covers release preparation and staging verification for the WordPr
 
 ## Publish a GitHub Release
 
-No stable GitHub Release is currently available. Until one is published, the README correctly directs users to **Code > Download ZIP**.
+Stable releases are published by the GitHub Actions workflow in `.github/workflows/publish-release.yml`. The workflow verifies that the tag, plugin header, and WordPress.org `Stable tag` match before it builds and attaches the installable plugin ZIP.
 
-When version 1.0.2 passes all release checks:
+For each verified version:
 
-1. Create the tag `v1.0.2` from the verified `main` commit.
-2. Create a GitHub Release for that tag.
-3. Attach `dist/npati-content-automation-1.0.2.zip` as the installation asset.
+1. Create and push a tag in the format `v<version>` from the verified `main` commit.
+2. Confirm that the **Publish WordPress plugin release** workflow completes successfully.
+3. Confirm that the release is stable, marked Latest, and includes `npati-content-automation-<version>.zip` as a separate asset.
 4. Download the attached asset and repeat the clean-install smoke test.
-5. Change the public installation instructions to link to the release asset only after that asset is available.
+
+Do not use GitHub's automatically generated **Source code (zip)** archive as the WordPress installation package.
 
 Production connections require HTTPS. PHP sodium is required for Ed25519 webhook verification. Social OAuth tokens stay in NPATI Hub and are never stored in WordPress.
