@@ -116,7 +116,7 @@ No hidden telemetry is included. The optional frontend NPATI Store link is off b
 
 = WordPress AI Client compatibility =
 
-WordPress 7.0 and later include the provider-agnostic WordPress AI Client. NPATI Content Automation does not bundle the WordPress AI Client or the underlying PHP AI Client, so it cannot load duplicate SDK classes on WordPress 7.0 and later.
+WordPress 7.0 and later include the provider-agnostic WordPress AI Client. NPATI Content Automation does not bundle the WordPress AI Client or the underlying PHP AI Client, so the plugin does not introduce duplicate SDK classes on WordPress 7.0 and later.
 
 The current optional OpenAI feature intentionally keeps its existing direct provider for backward compatibility with WordPress 6.4 and later and to preserve its OpenAI-specific API-key connection, model discovery, Responses API structured output, and existing user settings. Requests use the WordPress HTTP API, never execute remote code, and send the encrypted key only to the fixed `https://api.openai.com/v1` service when an administrator tests or uses the feature. A future provider-agnostic migration should be made only when it can preserve these capabilities and existing settings without a functional regression.
 

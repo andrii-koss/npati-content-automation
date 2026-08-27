@@ -307,6 +307,6 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\build-wordpress-pl
 
 The archive is written to `dist/npati-content-automation-<version>.zip`. Development dependencies, tests, documentation, and repository metadata are excluded automatically.
 
-<h2><strong>License</strong></h2>
+<h2 align="center"><strong>License</strong></h2>
 
 NPATI Content Automation is licensed under the [GNU General Public License v2.0 or later](LICENSE).

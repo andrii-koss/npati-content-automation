@@ -36,15 +36,15 @@ The plugin itself is free to install and use. Connected third-party services may
 
 ## Developer documentation
 
-The files below describe the plugin architecture, API, security model, database, deployment, and WordPress.org preparation:
+The files below include current technical references and clearly labeled historical planning material:
 
 - [API contract](API_CONTRACT.md)
-- [Existing API notes](EXISTING_API.md)
+- [Existing API audit (historical)](EXISTING_API.md)
 - [Database schema](DATABASE_SCHEMA.md)
 - [Security model](SECURITY_MODEL.md)
 - [Plugin architecture](WORDPRESS_PLUGIN_ARCHITECTURE.md)
 - [Deployment](DEPLOYMENT.md)
-- [Implementation plan](IMPLEMENTATION_PLAN.md)
+- [Archived implementation plan](IMPLEMENTATION_PLAN.md)
 - [WordPress.org checklist](WORDPRESS_ORG_CHECKLIST.md)
 
 For local development and contribution instructions, see [CONTRIBUTING.md](../CONTRIBUTING.md).

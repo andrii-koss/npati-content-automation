@@ -1,15 +1,15 @@
 # Existing NPATI API audit
 
-Audit date: 2026-08-12. Sources: `frontend`, `backend`, and `npati Hub` in this repository.
+Audit date: 2026-08-12. Sources: `frontend`, `backend`, and `NPATI Hub` in this repository.
 
 ## Markets
 
-| Market | Country | Public prefix | Default currency |
-|---|---|---|---|
-| United States | US | `/` | USD |
-| Ukraine | UA | `/ua/` | UAH |
-| Canada | CA | `/ca/` | CAD |
-| United Kingdom | GB | `/gb/` | GBP |
+| Market         | Country | Public prefix | Default currency |
+| -------------- | ------- | ------------- | ---------------- |
+| United States  | US      | `/`           | USD              |
+| Ukraine        | UA      | `/ua/`        | UAH              |
+| Canada         | CA      | `/ca/`        | CAD              |
+| United Kingdom | GB      | `/gb/`        | GBP              |
 
 The frontend market configuration is the source for routing. Hub schemas already accept `US`, `UA`, `CA`, and `GB`. Store/profile URLs must be returned by the API; the plugin does not derive usernames into URLs.
 
@@ -17,18 +17,18 @@ The frontend market configuration is the source for routing. Hub schemas already
 
 All protected Hub routes accept an NPATI user Bearer token or `X-API-Key`. Same-domain production aliases use `/hub/api/v1`.
 
-| Method | Route | Existing behavior | WordPress use |
-|---|---|---|---|
-| GET | `/accounts` | Connected social accounts | Connections UI |
-| GET/POST/PATCH | `/jobs`, `/jobs/:id` | Drafts, history, updates | Hub posts and calendar |
-| POST | `/jobs/:id/schedule` | Hub-side scheduling | Schedule |
-| POST | `/jobs/:id/publish` | Queue a confirmed draft | Explicit publish |
-| DELETE | `/jobs/:id` | Cancel scheduled content | Calendar cancel |
-| POST | `/jobs/:id/retry` | Retry failed targets | History retry |
-| GET | `/dashboard/summary` | Counts, account status, activity | Dashboard/analytics |
-| GET/POST/DELETE | `/assets` | Hub media library | Media selection/upload |
-| GET | `/listings`, `/listings/:slug` | Current user's listings/videos/shorts | Market and blocks |
-| GET | `/oauth/{provider}/start|status` | Hub-owned OAuth | Explicit external navigation only |
+| Method          | Route                                                   | Existing behavior                     | WordPress use                     |
+| --------------- | ------------------------------------------------------- | ------------------------------------- | --------------------------------- |
+| GET             | `/accounts`                                             | Connected social accounts             | Connections UI                    |
+| GET/POST/PATCH  | `/jobs`, `/jobs/:id`                                    | Drafts, history, updates              | Hub posts and calendar            |
+| POST            | `/jobs/:id/schedule`                                    | Hub-side scheduling                   | Schedule                          |
+| POST            | `/jobs/:id/publish`                                     | Queue a confirmed draft               | Explicit publish                  |
+| DELETE          | `/jobs/:id`                                             | Cancel scheduled content              | Calendar cancel                   |
+| POST            | `/jobs/:id/retry`                                       | Retry failed targets                  | History retry                     |
+| GET             | `/dashboard/summary`                                    | Counts, account status, activity      | Dashboard/analytics               |
+| GET/POST/DELETE | `/assets`                                               | Hub media library                     | Media selection/upload            |
+| GET             | `/listings`, `/listings/:slug`                          | Current user's listings/videos/shorts | Market and blocks                 |
+| GET             | `/oauth/{provider}/start` or `/oauth/{provider}/status` | Hub-owned OAuth                       | Explicit external navigation only |
 
 Social tokens are encrypted by the existing Hub Token Vault. The existing publisher worker, scheduler worker, queues, adapters and idempotent `repost_jobs` table are reused.
 
