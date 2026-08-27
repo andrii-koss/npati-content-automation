@@ -53,6 +53,8 @@ final class Admin {
 		);
 		return $map[ $slug ] ?? 'npati_view';}
 	public function assets( $hook ) {
+		$menu_css_version = file_exists( NPATI_HUB_DIR . 'assets/css/admin-menu.css' ) ? (string) filemtime( NPATI_HUB_DIR . 'assets/css/admin-menu.css' ) : NPATI_HUB_VERSION;
+		wp_enqueue_style( 'npati-hub-admin-menu', NPATI_HUB_URL . 'assets/css/admin-menu.css', array(), $menu_css_version );
 		if ( 'toplevel_page_npati' !== $hook && 0 !== strpos( $hook, 'npati_page_' ) ) {
 			return;
 		}$status = $this->connection->status();
@@ -65,8 +67,6 @@ final class Admin {
 		$js_version  = file_exists( NPATI_HUB_DIR . 'assets/js/admin.js' ) ? (string) filemtime( NPATI_HUB_DIR . 'assets/js/admin.js' ) : NPATI_HUB_VERSION;
 		wp_enqueue_media();
 		wp_enqueue_style( 'npati-hub-admin', NPATI_HUB_URL . 'assets/css/admin.css', array(), $css_version );
-		$menu_icon_css = '#adminmenu #toplevel_page_npati .wp-menu-image{width:36px!important;height:34px!important;display:flex!important;align-items:center!important;justify-content:center!important}#adminmenu #toplevel_page_npati .wp-menu-image:before{content:""!important;display:block!important;box-sizing:border-box!important;width:20px!important;height:20px!important;margin:0!important;padding:0!important;border:0!important;border-radius:3px!important;background:#fff url("' . esc_url_raw( NPATI_HUB_URL . 'assets/images/favicon.png' ) . '") center/20px 20px no-repeat!important}#adminmenu #toplevel_page_npati .wp-menu-image img{display:none!important}';
-		wp_add_inline_style( 'npati-hub-admin', $menu_icon_css );
 		wp_enqueue_script( 'npati-hub-admin', NPATI_HUB_URL . 'assets/js/admin.js', array( 'wp-api-fetch', 'wp-i18n', 'media-editor' ), $js_version, true );
 		wp_add_inline_script(
 			'npati-hub-admin',

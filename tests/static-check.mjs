@@ -42,6 +42,7 @@ for (const file of await files(root)) {
 const admin = searchable(await readFile(resolve(root, 'includes/Admin/Admin.php'), 'utf8'));
 const adminJs = searchable(await readFile(resolve(root, 'assets/js/admin.js'), 'utf8'));
 const adminCss = searchable(await readFile(resolve(root, 'assets/css/admin.css'), 'utf8'));
+const adminMenuCss = searchable(await readFile(resolve(root, 'assets/css/admin-menu.css'), 'utf8'));
 const bootstrap = searchable(await readFile(resolve(root, 'npati-hub.php'), 'utf8'));
 const settings = searchable(await readFile(resolve(root, 'includes/Core/Settings.php'), 'utf8'));
 const i18n = searchable(await readFile(resolve(root, 'includes/Core/I18n.php'), 'utf8'));
@@ -98,6 +99,11 @@ if (!admin.includes("remove_submenu_page('npati','npati')")) {
 }
 if (!admin.includes("add_menu_page('NPATI','NPATI','npati_view','npati',array($this,'page'),NPATI_HUB_URL.'assets/images/favicon.png',58)") || admin.includes("'dashicons-marker'") || !admin.includes("remove_submenu_page('npati','npati-calendar')") || !admin.includes("remove_submenu_page('npati','npati-connections')")) {
   console.error('WordPress admin menu branding or hidden Hub shortcuts are missing'); failed = true;
+}
+for (const required of ['width:20px!important', 'height:20px!important', 'background:#fffurl("../images/favicon.png")center/20px20pxno-repeat!important', 'display:none!important']) {
+  if (!adminMenuCss.includes(required)) {
+    console.error(`WordPress admin menu icon sizing is missing: ${required}`); failed = true;
+  }
 }
 for (const removedRoute of ['data-route="dashboard"', 'data-route="hub/history"', 'data-route="analytics"', "state.route==='dashboard'", "state.route==='hub/history'", "state.route==='analytics'"]) {
   if (admin.includes(removedRoute) || adminJs.includes(removedRoute)) {
@@ -167,7 +173,7 @@ for (const required of ['input[name="npati[store_link_text]"]{box-sizing:border-
     console.error(`Store-link field does not match the other Settings controls: ${required}`); failed = true;
   }
 }
-if (admin.includes('npati-security-heading') || admin.includes('npati-settings-panel') || !admin.includes("filemtime(NPATI_HUB_DIR.'assets/css/admin.css')") || !admin.includes("wp_add_inline_style('npati-hub-admin',$menu_icon_css)")) {
+if (admin.includes('npati-security-heading') || admin.includes('npati-settings-panel') || !admin.includes("filemtime(NPATI_HUB_DIR.'assets/css/admin.css')") || !admin.includes("wp_enqueue_style('npati-hub-admin-menu',NPATI_HUB_URL.'assets/css/admin-menu.css'")) {
   console.error('Broken Security/Settings redesign or stale asset caching returned'); failed = true;
 }
 if (admin.includes("add_action('admin_head'") || /echo\s+['\"]<style/i.test(admin)) {

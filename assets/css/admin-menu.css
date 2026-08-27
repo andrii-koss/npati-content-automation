@@ -1,0 +1,24 @@
+#adminmenu #toplevel_page_npati .wp-menu-image {
+  display: flex !important;
+  width: 36px !important;
+  height: 34px !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+#adminmenu #toplevel_page_npati .wp-menu-image::before {
+  display: block !important;
+  box-sizing: border-box !important;
+  width: 20px !important;
+  height: 20px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 3px !important;
+  background: #fff url("../images/favicon.png") center / 20px 20px no-repeat !important;
+  content: "" !important;
+}
+
+#adminmenu #toplevel_page_npati .wp-menu-image img {
+  display: none !important;
+}
