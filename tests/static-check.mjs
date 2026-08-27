@@ -272,7 +272,7 @@ for (const required of ['maxlength="60"', 'maxlength="2000"', 'listing-photos', 
     console.error(`create-product parity is missing: ${required}`); failed = true;
   }
 }
-for (const required of ['form.elements.disableBuy.disabled = true', 'form.elements.shippingAvailable.disabled = true', 'disableBuy: true', 'shippingAvailable: false']) {
+for (const required of ['lockListingSwitch(form.elements.disableBuy,true)', 'lockListingSwitch(form.elements.shippingAvailable,false)', 'disableBuy: true', 'shippingAvailable: false']) {
   if (!adminJs.includes(required)) {
     console.error(`Temporary purchase/delivery restriction is missing: ${required}`); failed = true;
   }
