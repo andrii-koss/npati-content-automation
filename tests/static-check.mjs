@@ -60,6 +60,15 @@ if (/PRIMARY KEY[^\r\n]+(?:UNIQUE )?KEY/.test(activator)) {
 for (const action of ['wordpress.posts.list', 'wordpress.post.get', 'wordpress.taxonomies.list', 'wordpress.category.create', 'wordpress.tag.create', 'wordpress.post.create', 'wordpress.post.update', 'wordpress.post.publish']) {
   if (!webhook.includes(action)) { console.error(`Signed WordPress command is missing: ${action}`); failed = true; }
 }
+if (/['"]WordPress\.(?:posts|post|taxonomies|category|tag|media|content)\./.test(webhook)) {
+  console.error('Signed WordPress command dispatch is case-sensitive and must use the lowercase wire protocol'); failed = true;
+}
+if (webhook.includes("'recorded' => true") || !webhook.includes('Unsupported WordPress command.')) {
+  console.error('Unknown signed commands must fail instead of returning recorded:true'); failed = true;
+}
+for (const field of ["'post_id'", "'status'", "'edit_url'", "'preview_url'", "'content_hash'", "'updated_at'"]) {
+  if (!webhook.includes(field)) { console.error(`WordPress article response field is missing: ${field}`); failed = true; }
+}
 for (const guard of ['expected_content_hash', 'content_hash', 'allow_remote_publish', 'wp_set_post_terms', '_yoast_wpseo_metadesc']) {
   if (!webhook.includes(guard)) { console.error(`WordPress content safety/SEO support is missing: ${guard}`); failed = true; }
 }

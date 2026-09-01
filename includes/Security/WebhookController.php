@@ -121,30 +121,30 @@ final class WebhookController {
 	}
 
 	private function dispatch( $action, array $payload ) {
-		if ( 'WordPress.content.generate' === $action ) {
+		if ( 'wordpress.content.generate' === $action ) {
 			$task = is_array( $payload['task'] ?? null ) ? $payload['task'] : array();
 			return $this->content->generate_article( $task );}
-		if ( 'WordPress.posts.list' === $action ) {
+		if ( 'wordpress.posts.list' === $action ) {
 			return $this->list_posts( is_array( $payload['query'] ?? null ) ? $payload['query'] : array() );}
-		if ( 'WordPress.post.get' === $action ) {
+		if ( 'wordpress.post.get' === $action ) {
 			return $this->get_post_payload( absint( $payload['wordpress_post_id'] ?? 0 ) );}
-		if ( 'WordPress.taxonomies.list' === $action ) {
+		if ( 'wordpress.taxonomies.list' === $action ) {
 			return $this->list_taxonomies();}
-		if ( 'WordPress.media.list' === $action ) {
+		if ( 'wordpress.media.list' === $action ) {
 			return $this->list_media( is_array( $payload['query'] ?? null ) ? $payload['query'] : array() );}
-		if ( 'WordPress.media.upload' === $action ) {
+		if ( 'wordpress.media.upload' === $action ) {
 			return $this->upload_media( is_array( $payload['media'] ?? null ) ? $payload['media'] : array() );}
-		if ( 'WordPress.media.delete' === $action ) {
+		if ( 'wordpress.media.delete' === $action ) {
 			return $this->delete_media( absint( $payload['attachment_id'] ?? 0 ) );}
-		if ( 'WordPress.category.create' === $action ) {
+		if ( 'wordpress.category.create' === $action ) {
 			return $this->create_term( 'category', is_array( $payload['term'] ?? null ) ? $payload['term'] : array() );}
-		if ( 'WordPress.tag.create' === $action ) {
+		if ( 'wordpress.tag.create' === $action ) {
 			return $this->create_term( 'post_tag', is_array( $payload['term'] ?? null ) ? $payload['term'] : array() );}
-		if ( 'WordPress.category.delete' === $action ) {
+		if ( 'wordpress.category.delete' === $action ) {
 			return $this->delete_term( 'category', absint( $payload['term_id'] ?? 0 ) );}
-		if ( 'WordPress.tag.delete' === $action ) {
+		if ( 'wordpress.tag.delete' === $action ) {
 			return $this->delete_term( 'post_tag', absint( $payload['term_id'] ?? 0 ) );}
-		if ( 0 !== strpos( $action, 'WordPress.post.' ) ) {
+		if ( 0 !== strpos( $action, 'wordpress.post.' ) ) {
 			update_option(
 				'npati_hub_last_security_event',
 				array(
@@ -153,7 +153,7 @@ final class WebhookController {
 				),
 				false
 			);
-			return array( 'recorded' => true ); }
+			throw new \InvalidArgumentException( esc_html__( 'Unsupported WordPress command.', 'npati-content-automation' ) ); }
 		$post                   = is_array( $payload['post'] ?? null ) ? $payload['post'] : array();
 		$post_id                = absint( $payload['wordpress_post_id'] ?? 0 );
 		$expected_hash          = sanitize_text_field( $payload['expected_content_hash'] ?? '' );
@@ -165,7 +165,7 @@ final class WebhookController {
 			throw new \RuntimeException( esc_html__( 'WordPress post was not found.', 'npati-content-automation' ) );}
 		if ( $post_id && ( ! $expected_hash || ! hash_equals( $expected_hash, $this->post_hash( $existing ) ) ) ) {
 			throw new \RuntimeException( esc_html__( 'Content changed in WordPress. Review the latest version before trying again.', 'npati-content-automation' ) );}
-		if ( 'WordPress.post.delete' === $action ) {
+		if ( 'wordpress.post.delete' === $action ) {
 			$snapshot = $this->get_post_payload( $post_id );
 			$trashed  = wp_trash_post( $post_id );
 			if ( ! $trashed ) {
@@ -175,7 +175,7 @@ final class WebhookController {
 				'deleted' => true,
 				'status'  => 'trash',
 			);}
-		if ( 'WordPress.post.publish' === $action ) {
+		if ( 'wordpress.post.publish' === $action ) {
 			if ( ! $this->settings->get( 'allow_remote_publish', false ) || 'high' === $this->settings->get( 'security_mode', 'standard' ) ) {
 				throw new \RuntimeException( esc_html__( 'Remote publishing is disabled in NPATI plugin Settings.', 'npati-content-automation' ) );
 			}$result = wp_update_post(
@@ -259,6 +259,7 @@ final class WebhookController {
 				'status'       => $post->post_status,
 				'excerpt'      => get_the_excerpt( $post ),
 				'modified_at'  => get_post_modified_time( 'c', true, $post ),
+				'updated_at'   => get_post_modified_time( 'c', true, $post ),
 				'url'          => get_permalink( $post ),
 				'content_hash' => $this->post_hash( $post ),
 			);
@@ -283,6 +284,8 @@ final class WebhookController {
 			'created_at'        => get_post_time( 'c', true, $post ),
 			'modified_at'       => get_post_modified_time( 'c', true, $post ),
 			'url'               => get_permalink( $post ),
+			'permalink'         => get_permalink( $post ),
+			'preview_url'       => get_preview_post_link( $post ),
 			'edit_url'          => get_edit_post_link( $post->ID, 'raw' ),
 			'category_ids'      => wp_get_post_categories( $post->ID ),
 			'tag_ids'           => wp_get_post_tags( $post->ID, array( 'fields' => 'ids' ) ),
